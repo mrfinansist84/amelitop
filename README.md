@@ -17,3 +17,19 @@ You need Anaconda to be installed in your local machine.
 ### DB Migrations
 - `python manage.py makemigrations <app>` - create the migrations
 - `python manage.py migrate` - execute the migrations
+
+
+## UI Installation
+
+## Installation
+
+- Make sure to have node version 16.10.0 installed preferably through NVM.
+- cd into **ui folder** of the project or whatever folder created to house your ui code.
+- Run the command `npm i`.
+- After the dependencies have been installed. You are ready to build.
+
+### Local Development
+- `npm run start` will spin up your local dev environment. This will automatically point to super tomcat if needed at localhost.
+
+### Building
+- Run `npm run build` command to build the project.
