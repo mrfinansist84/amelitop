@@ -1,4 +1,7 @@
-# Django #
+# Common
+.env
+
+# Django
 *.log
 *.pot
 *.pyc
