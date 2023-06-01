@@ -1,4 +1,5 @@
 import * as React from 'react'
+import './Banner.scss'
 
 interface IProps {
   name: string
