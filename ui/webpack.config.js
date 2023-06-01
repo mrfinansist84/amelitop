@@ -25,6 +25,14 @@ module.exports = {
         use: "ts-loader",
         exclude: /node_modules/,
       },
+      {
+        test: /\.scss?$/,
+        use: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader']
+      },
+      {
+        test: /\.css?$/,
+        use: ['style-loader', 'css-loader']
+      }  
     ],
   },
   resolve: {
