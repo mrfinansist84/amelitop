@@ -9,10 +9,14 @@
     ],
     "overrides": [
     ],
+    "settings": {
+        "react": {
+          "version": "detect"
+        }
+      },
     "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module",
-        "project": ["./tsconfig.json"]
+       "project": ["./tsconfig.json"],
+        "sourceType": "module"
     },
     "plugins": [
         "react"
@@ -20,6 +24,12 @@
     "rules": {
         "@typescript-eslint/prefer-nullish-coalescing": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "generator-star-spacing": "off",
+        "@typescript-eslint/consistent-type-definitions": "off",
+        "@typescript-eslint/space-before-function-paren": "off",
+        "@typescript-eslint/semi": "off",
+        "semi": "off",
         "max-len": [
             "error",
             {
