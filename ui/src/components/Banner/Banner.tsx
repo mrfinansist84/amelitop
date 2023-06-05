@@ -1,5 +1,6 @@
 import * as React from 'react'
-import "./Banner.scss"
+import './Banner.scss'
+
 
 interface IProps {
   name: string
