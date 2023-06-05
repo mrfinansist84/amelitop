@@ -1,6 +1,5 @@
 # Common
 .env
-.vscode
 
 # Django
 *.log

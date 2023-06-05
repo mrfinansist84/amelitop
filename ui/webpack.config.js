@@ -1,5 +1,5 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -27,12 +27,7 @@ module.exports = {
       },
       {
         test: /\.scss?$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'resolve-url-loader',
-          'sass-loader'
-        ]
+        use: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader']
       },
       {
         test: /\.css?$/,
@@ -48,4 +43,4 @@ module.exports = {
       template: './src/index.html'
     })
   ]
-}
+};
