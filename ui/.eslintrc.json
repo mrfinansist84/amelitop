@@ -11,6 +11,7 @@
     }
   },
   "parserOptions": {
+    "tsconfigRootDir": "./amelitop/ui",
     "project": ["./tsconfig.json"],
     "sourceType": "module"
   },

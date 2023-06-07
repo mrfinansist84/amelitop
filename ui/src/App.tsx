@@ -14,7 +14,6 @@ export const App = () => (
         <Route path="/login" element={<div>login</div>} />
         <Route path="/lesson/:id" element={<div>lesson</div>} />
         <Route path="/lessons" element={<div>lessons</div>} />
-        <Route path="/profile" element={<div>profile</div>} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<div>not found</div>} />
       </Routes>

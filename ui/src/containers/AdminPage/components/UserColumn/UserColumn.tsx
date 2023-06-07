@@ -1,20 +1,20 @@
 import * as React from 'react';
 
+import { type User } from '../../../../global/types';
+import { initialUser } from '../../../../global/constants';
 import UserListItem from '../UserListItem';
+
 import './UserColumn.scss';
 
-interface User {
-  name: string;
-  id: string;
-  email: string;
-  secondName: string;
+interface Props {
+  userList: User[];
+  doAction: (user: User, actionType: string, createMode: boolean) => void;
   userType: string;
-  isBlocked: boolean;
-}
+};
 
-export const UserColumn = (props: any) => {
+export const UserColumn: React.FC<Props> = (props) => {
   const createUser = (userType: string) => {
-    console.log(userType);
+    props.doAction({ ...initialUser, profile: { role: userType } }, 'edit', true);
   };
 
   return (

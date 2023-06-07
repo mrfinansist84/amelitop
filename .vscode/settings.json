@@ -10,5 +10,14 @@
       "source.organizeImports": true
     }
   },
-  "eslint.workingDirectories": [{ "mode": "auto" }]
+  "javascript.format.enable": true,
+  "typescript.format.enable": true,
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "eslint.workingDirectories": [
+    { "mode": "auto" }
+  ]
 }

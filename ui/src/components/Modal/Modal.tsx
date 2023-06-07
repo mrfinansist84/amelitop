@@ -9,9 +9,10 @@ import './Modal.scss';
 interface Props {
   show: boolean;
   onHide: () => void;
-  btnCloseName: string | 'Close';
-  btnSaveName: string | 'Save';
-  title: string;
+  onSave?: () => void;
+  btnCloseName?: string;
+  btnSaveName?: string;
+  header?: string;
   body: any;
   isShowFooter?: boolean;
   isShowHeader?: boolean;
@@ -19,10 +20,10 @@ interface Props {
 
 export const CustomModal: React.FC<Props> = (props) => {
   return (
-    <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
+    <Modal show={props.show} onHide={props.onHide} aria-labelledby="contained-modal-title-vcenter" centered>
       {props.isShowHeader && (
         <Modal.Header closeButton>
-          <Modal.Title>{props.title}</Modal.Title>
+          <Modal.Title>{props.header}</Modal.Title>
         </Modal.Header>
       )}
       <Modal.Body>{props.body}</Modal.Body>
@@ -31,7 +32,7 @@ export const CustomModal: React.FC<Props> = (props) => {
           <Button variant="secondary" onClick={props.onHide}>
             {props.btnCloseName}
           </Button>
-          <Button variant="primary" onClick={props.onHide}>
+          <Button variant="primary" onClick={props.onSave}>
             {props.btnSaveName}
           </Button>
         </Modal.Footer>

@@ -13,8 +13,6 @@ interface Props {
   placement: Placement;
   header?: string;
   body: any;
-  btnClass: string;
-  btnName: string;
   show?: boolean;
   closeMenu: () => void;
 }

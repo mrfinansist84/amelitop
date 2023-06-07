@@ -11,7 +11,12 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    static: './dist'
+    static: './dist',
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:8000'
+      }
+    }
   },
   module: {
     rules: [
