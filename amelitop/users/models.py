@@ -3,9 +3,9 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 ROLE_CHOICES = (
-    (0, 'Admin'),
-    (1, 'Teacher'),
-    (2, 'Student')
+    ('ADMIN', 'Admin'),
+    ('TEACHER', 'Teacher'),
+    ('STUDENT', 'Student')
 )
 
 
