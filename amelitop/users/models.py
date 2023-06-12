@@ -2,6 +2,12 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+ROLE_CHOICES = (
+    (0, 'Admin'),
+    (1, 'Teacher'),
+    (2, 'Student')
+)
+
 
 class User(AbstractUser):
     username = models.CharField(max_length=150, blank=True, null=True)
@@ -21,6 +27,7 @@ class UserProfile(models.Model):
         related_name='profile'
     )
 
-    role = models.CharField(max_length=10)
+    role = models.CharField(max_length=7, choices=ROLE_CHOICES)
     phone = models.CharField(max_length=12, blank=True)
-    photo = models.ImageField(upload_to=None, blank=True)
+    photo = models.ImageField(upload_to=None, blank=True, null=True)
+    is_blocked = models.BooleanField(blank=True, default=False)
