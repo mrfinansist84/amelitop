@@ -1,0 +1,10 @@
+.loader-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+
+  .loader {
+    position: absolute;
+  }
+}

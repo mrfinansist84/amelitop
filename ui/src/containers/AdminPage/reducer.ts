@@ -2,7 +2,15 @@ import { type Actions } from './actions';
 import {
   GET_ALL_USERS_REQUEST,
   GET_ALL_USERS_ERROR,
-  GET_ALL_USERS_SUCCESS
+  UPDATE_USER_LIST,
+  CREATE_USER_REQUEST,
+  CREATE_USER_ERROR,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_ERROR,
+  DELETE_USER_REQUEST,
+  DELETE_USER_ERROR,
+  UPDATE_STATUS_REQUEST,
+  UPDATE_STATUS_ERROR
 } from './constants';
 
 export const initialState = {
@@ -22,7 +30,7 @@ export const adminPageReducer = (state: ReduxState = initialState, action: Actio
         error: null
       }
     }
-    case GET_ALL_USERS_SUCCESS: {
+    case UPDATE_USER_LIST: {
       return {
         ...state,
         loading: false,
@@ -31,6 +39,62 @@ export const adminPageReducer = (state: ReduxState = initialState, action: Actio
       }
     }
     case GET_ALL_USERS_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      }
+    }
+    case CREATE_USER_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        error: null
+      }
+    }
+    case CREATE_USER_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      }
+    }
+    case UPDATE_USER_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        error: null
+      }
+    }
+    case UPDATE_USER_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      }
+    }
+    case DELETE_USER_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        error: null
+      }
+    }
+    case DELETE_USER_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      }
+    }
+    case UPDATE_STATUS_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        error: null
+      }
+    }
+    case UPDATE_STATUS_ERROR: {
       return {
         ...state,
         loading: false,

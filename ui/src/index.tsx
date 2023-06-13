@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { App } from './App';
 import store from './store';
 import { BrowserRouter } from 'react-router-dom';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import * as bootstrap from 'bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 

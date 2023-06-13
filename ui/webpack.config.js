@@ -1,5 +1,5 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -11,7 +11,12 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    static: './dist'
+    static: './dist',
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:8000'
+      }
+    }
   },
   module: {
     rules: [
@@ -27,12 +32,7 @@ module.exports = {
       },
       {
         test: /\.scss?$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'resolve-url-loader',
-          'sass-loader'
-        ]
+        use: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader']
       },
       {
         test: /\.css?$/,
@@ -48,4 +48,4 @@ module.exports = {
       template: './src/index.html'
     })
   ]
-}
+};

@@ -1,0 +1,28 @@
+.user-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+
+ .user-info-item__name {
+    display: flex;
+    align-items: center;
+
+    .name-text {
+      max-width: 250px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .badge {
+      margin-left: 2px;
+    }
+  } 
+
+ .user-info-item__control {
+  .btn---block {
+    width: 86px;
+  }
+ }
+}
