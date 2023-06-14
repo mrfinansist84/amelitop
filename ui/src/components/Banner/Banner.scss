@@ -1,10 +1,25 @@
 .banner {
-    background-color: green;
-    box-sizing: border-box;
-    padding: 2rem;
-    text-align: center;
-  
-    &__text {
-      color: red;
+    .banner--status-success {
+      background-color: #d1e7dd;
+      border-color: #badbcc;
+      color: #0f5132;
+    }
+
+    .banner--status-danger {
+      background-color: #f8d7da;
+      border-color: #f5c2c7;
+      color: #842029;
+    }
+
+    .banner--status-warning {
+      background-color: #664d03;
+      border-color: #ffecb5;
+      color: #fff3cd;
+    }
+
+    .banner--status-information {
+      background-color: #cfe2ff;
+      border-color: #f5c2c7;
+      color: #084298;
     }
   }

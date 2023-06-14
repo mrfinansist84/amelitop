@@ -9,8 +9,8 @@ import {
   DELETE_USER_REQUEST,
   DELETE_USER_ERROR,
   UPDATE_STATUS_REQUEST,
-  UPDATE_STATUS_ERROR
-
+  UPDATE_STATUS_ERROR,
+  TOGGLE_BANNER
 } from './constants';
 import { type User } from '../../global/types';
 
@@ -69,6 +69,13 @@ export const updateUserStatusError = (error: any) => ({
   payload: error
 });
 
+export const toggleBannerAction = (state: boolean, status: string, message: string) => ({
+  type: TOGGLE_BANNER,
+  state,
+  status,
+  message
+});
+
 export type Actions =
     | ReturnType<typeof getAllUsersRequest>
     | ReturnType<typeof getAllUsersError>
@@ -80,4 +87,5 @@ export type Actions =
     | ReturnType<typeof deleteUserRequest>
     | ReturnType<typeof deleteUserError>
     | ReturnType<typeof updateUserStatusRequest>
-    | ReturnType<typeof updateUserStatusError>;
+    | ReturnType<typeof updateUserStatusError>
+    | ReturnType<typeof toggleBannerAction>;

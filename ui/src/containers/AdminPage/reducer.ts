@@ -10,13 +10,17 @@ import {
   DELETE_USER_REQUEST,
   DELETE_USER_ERROR,
   UPDATE_STATUS_REQUEST,
-  UPDATE_STATUS_ERROR
+  UPDATE_STATUS_ERROR,
+  TOGGLE_BANNER
 } from './constants';
 
 export const initialState = {
   loading: true as boolean,
   error: null as any,
-  userList: [] as any[]
+  userList: [] as any[],
+  showBanner: false as boolean,
+  bannerStatus: '' as string,
+  bannerMessage: '' as string
 }
 
 type ReduxState = typeof initialState;
@@ -99,6 +103,15 @@ export const adminPageReducer = (state: ReduxState = initialState, action: Actio
         ...state,
         loading: false,
         error: action.payload
+      }
+    }
+    case TOGGLE_BANNER: {
+      return {
+        ...state,
+        showBanner: action.state,
+        bannerStatus: action.status,
+        bannerMessage: action.message,
+        loading: false
       }
     }
     default: {
