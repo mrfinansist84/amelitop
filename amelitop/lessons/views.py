@@ -6,6 +6,18 @@ from rest_framework.response import Response
 class LessonsViewSet(viewsets.ModelViewSet):
     serializer_class = LessonSerializer
 
+    def mutator(self, model, currentData, fieldList, action):
+        if (action == 'cteate'):
+           result = model()
+
+        if(action == 'update'):
+            result = model.objects.get(id=currentData['id'])
+
+        for item in fieldList:
+          setattr(result, item, currentData[item])
+        return result
+    
+    
     def get_queryset(self):
         return Lesson.objects.all()
 
@@ -18,34 +30,19 @@ class LessonsViewSet(viewsets.ModelViewSet):
 
         if (data.get('text')):
           for item in data['text']:
-                text_obj = Text.objects.create(
-                    title = item['title'],
-                    text = item['text'],
-                    index = item['index'],
-                    type = item['type']
-                )
+                text_obj = self.mutator(Text, item, ['text', 'title', 'index', 'type'], 'create')
                 text_obj.save()
                 new_lesson.text.add(text_obj)
   
         if (data.get('picture')):
           for item in data['picture']:
-                picture_obj = Picture.objects.create(
-                    title = item['title'],
-                    link = item['link'],
-                    index = item['index'],
-                    type = item['type']
-                )
+                picture_obj = self.mutator(Picture, item, ['link', 'title', 'index', 'type'], 'create')
                 picture_obj.save()
                 new_lesson.picture.add(picture_obj)
 
         if (data.get('video')):
           for item in data['video']:
-                video_obj = Video.objects.create(
-                  title = item['title'],
-                  link = item['link'],
-                  index = item['index'],
-                  type = item['type']
-                )
+                video_obj = self.mutator(Video, item, ['link', 'title', 'index', 'type'], 'create')
                 video_obj.save()
                 new_lesson.video.add(video_obj)
 
@@ -54,26 +51,20 @@ class LessonsViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
     
     def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        instance.title = request.data.get("title")
+        instance = Lesson.objects.get(id=request.data['id'])
+        instance.title = request.data["title"]
+        instance.text.set([])
+        instance.video.set([])
+        instance.picture.set([])
         instance.save()
 
         if (request.data.get('text')):
           text_data = request.data.pop('text')
           for item in text_data:
             if (item.get('id')):
-              text_instance = Text.objects.get(id=item['id'])
-              text_instance.text = item['text']
-              text_instance.title = item['title']
-              text_instance.index = item['index']
-              text_instance.type = item['type']
+               text_instance = self.mutator(Text, item, ['text', 'title', 'index', 'type'], 'update')
             else:
-              text_instance = Text.objects.create(
-                  title = item['title'],
-                  text = item['text'],
-                  index = item['index'],
-                  type = item['type']
-              )
+              text_instance = self.mutator(Text, item, ['text', 'title', 'index', 'type'], 'create')
             text_instance.save()
             instance.text.add(text_instance)
         
@@ -81,18 +72,10 @@ class LessonsViewSet(viewsets.ModelViewSet):
           video_data = request.data.pop('video')
           for item in video_data:
             if (item.get('id')):
-              video_instance = Video.objects.get(id=item['id'])
-              video_instance.link = item['link']
-              video_instance.title = item['title']
-              video_instance.index = item['index']
-              video_instance.type = item['type']
+               video_instance = self.mutator(Video, item, ['link', 'title', 'index', 'type'], 'update')
             else:
-              video_instance = Video.objects.create(
-                  link = item['link'],
-                  title = item['title'],
-                  index = item['index'],
-                  type = item['type']
-              )
+              video_instance = self.mutator(Video, item, ['link', 'title', 'index', 'type'], 'create')
+            
             video_instance.save()
             instance.video.add(video_instance)
         
@@ -100,19 +83,10 @@ class LessonsViewSet(viewsets.ModelViewSet):
           picture_data = request.data.pop('picture')
           for item in picture_data:
             if (item.get('id')):
-              picture_instance = Picture.objects.get(id=item['id'])
-
-              picture_instance.link = item['link']
-              picture_instance.title = item['title']
-              picture_instance.index = item['index']
-              picture_instance.type = item['type']
+              picture_instance = self.mutator(Picture, item, ['link', 'title', 'index', 'type'], 'update')
             else:
-              picture_instance = Picture.objects.create(
-                  link = item['link'],
-                  title = item['title'],
-                  index = item['index'],
-                  type = item['type']
-              )
+              picture_instance = self.mutator(Picture, item, ['link', 'title', 'index', 'type'], 'create')
+            
             picture_instance.save()
             instance.picture.add(picture_instance)
             
