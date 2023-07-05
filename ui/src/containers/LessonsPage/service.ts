@@ -1,13 +1,12 @@
 import axios, { type AxiosResponse } from 'axios';
+import { GlobalService } from '../../global/GlobalService';
 
-class LessonsService {
-  public static async getLessons() {
+class LessonsService extends GlobalService {
+  public static async getLessons(accessToken: string) {
     try {
-      const response: AxiosResponse<any> = await axios.get('/api/lessons');
-      console.log(response.data);
+      const response: AxiosResponse<any> = await axios.get('/api/lessons', LessonsService.getHeaders(accessToken));
       return response.data;
     } catch (e) {
-      console.log(e);
       throw e.response.data;
     }
   }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Form, Card, ListGroup } from 'react-bootstrap';
 
 import { defaultElement, addingBtn, defaultLesson } from './constants';
@@ -17,6 +17,7 @@ export const LessonCreator: React.FC = () => {
   const [elementsList, setElementsList] = useState([]);
   const [generalInfo, setGeneralInfo] = useState(defaultLesson);
   const { loading } = useSelector((state: IRootReducer) => state.lessonCreatorReducer);
+  const navigate = useNavigate();
 
   if (loading) {
     return <Loader />;
@@ -53,9 +54,7 @@ export const LessonCreator: React.FC = () => {
     setElementsList(filteredList)
   }
 
-  const handleCancel = () => {
-    redirect('/lessons');
-  };
+  const handleCancel = () => navigate('/lessons');
 
   const getDataByType = (type: string) => {
     const list = elementsList.filter(item => item.type === type);

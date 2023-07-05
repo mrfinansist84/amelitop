@@ -18,6 +18,8 @@ You need Anaconda to be installed in your local machine.
 - `python manage.py makemigrations <app>` - create the migrations
 - `python manage.py migrate` - execute the migrations
 
+### Notes
+ - `/anaconda3/envs/amelitop/lib/python3.11/site-packages/django/utils/translation/__init__.py` - add in the file on row 109 next - ugettext_lazy = lazy(gettext, str) 
 
 ## UI Installation
 

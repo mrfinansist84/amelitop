@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from users.models import User, UserProfile
 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import  api_view,permission_classes
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,7 +30,7 @@ class UserSerializer(serializers.ModelSerializer):
         UserProfile.objects.create(user=user, **profile_data)
 
         return user
-
+ 
     def update(self, instance, validated_data):
         instance.email = validated_data.get('email', instance.email)
         instance.first_name = validated_data.get('first_name', instance.first_name)
