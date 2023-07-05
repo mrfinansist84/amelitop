@@ -1,0 +1,30 @@
+.side-nav {
+  padding: 15px;
+  width: 300px;
+  height: calc(100vh - 65px - 66px - 30px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  overflow: auto;
+
+  .side-nav__element {
+    padding: 10px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid #d9d9d9;
+    border-radius: 16px;
+
+    .side-nav__element-title {
+      font-size: 18px;
+    }
+
+    .side-nav__element-label {
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+  }
+}

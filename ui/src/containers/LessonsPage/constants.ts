@@ -1,0 +1,3 @@
+export const GET_ALL_LESSONS_REQUEST = 'GET_ALL_LESSONS_REQUEST' as const;
+export const GET_ALL_LESSONS_SUCCESS = 'GET_ALL_LESSONS_SUCCESS' as const;
+export const GET_ALL_LESSONS_ERROR = 'GET_ALL_LESSONS_ERROR' as const;
