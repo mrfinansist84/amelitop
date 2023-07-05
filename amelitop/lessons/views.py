@@ -19,7 +19,7 @@ class LessonsViewSet(viewsets.ModelViewSet):
     
     
     def get_queryset(self):
-        return Lesson.objects.all()
+        return Lesson.objects.prefetch_related("text").prefetch_related("video").prefetch_related("picture")
 
     def create(self, request, *args, **kwargs):
         data = request.data
