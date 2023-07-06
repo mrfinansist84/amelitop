@@ -1,0 +1,13 @@
+.lessons__content {
+  display: flex;
+  gap: 10px;
+
+  .lessons__list-container {
+    width: 100%;
+    height: calc(100vh - 65px - 66px - 30px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: auto;
+  }
+}
