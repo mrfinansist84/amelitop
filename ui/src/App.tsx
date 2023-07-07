@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import AdminPage from './containers/AdminPage';
 import Header from './containers/Header';
 import LessonsPage from './containers/LessonsPage';
+import LessonCreator from './containers/LessonCreator';
 import './App.scss';
 
 export const App = () => (
@@ -16,6 +17,7 @@ export const App = () => (
         <Route path="/login" element={<div>login</div>} />
         <Route path="/lesson/:id" element={<div>lesson</div>} />
         <Route path="/lessons" element={<LessonsPage />} />
+        <Route path="/create-lesson" element={<LessonCreator />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<div>not found</div>} />
       </Routes>

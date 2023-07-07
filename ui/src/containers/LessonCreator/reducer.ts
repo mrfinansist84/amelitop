@@ -1,0 +1,36 @@
+import { type Action } from './actions';
+import { SAVE_LESSON_REQUEST, SAVE_LESSON_SUCCESS, SAVE_LESSON_ERROR } from './constants';
+
+export const initialState = {
+  error: null as any,
+  lesson: null as any,
+  loading: false
+};
+
+type ReduxState = typeof initialState;
+
+export const lessonCreatorReducer = (
+  state: ReduxState = initialState, action: Action): ReduxState => {
+  switch (action.type) {
+    case SAVE_LESSON_REQUEST:
+      return {
+        ...state,
+        error: null,
+        loading: true
+      };
+    case SAVE_LESSON_SUCCESS:
+      return {
+        ...state,
+        loading: false
+      };
+    case SAVE_LESSON_ERROR:
+      return {
+        ...state,
+        error: action.error,
+        loading: false
+      };
+    default: {
+      return state;
+    }
+  }
+};

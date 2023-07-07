@@ -13,5 +13,9 @@ export interface User {
 };
 
 export interface Lesson {
-  id: string;
+  id?: string;
+  title: string;
+  text: any[];
+  picture: any[];
+  video: any[];
 };
