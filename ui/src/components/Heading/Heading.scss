@@ -18,4 +18,10 @@
       font-weight: 500;
     }
   }
+
+  .heading__buttons {
+    button + button {
+      margin-left: 10px;
+    }
+  }
 }

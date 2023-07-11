@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { Card } from 'react-bootstrap';
 import { LessonPreview } from './components';
 import { Heading, Loader, SideNav } from '../../components';
 import { type IRootReducer } from '../../rootReducer';
@@ -10,7 +10,8 @@ import './LessonsPage.scss';
 
 export const LessonsPage: React.FC = () => {
   const dispatch = useDispatch();
-  const { error, lessonsList, loading } = useSelector((state: IRootReducer) => state.lessonsReducer);
+  const { lessonsList, loading } = useSelector(
+    (state: IRootReducer) => state.lessonsReducer);
 
   React.useEffect(() => {
     dispatch(getAllLessonsRequest());
@@ -20,18 +21,29 @@ export const LessonsPage: React.FC = () => {
     return <Loader />;
   }
 
+  const getLessonsList = () => {
+    return lessonsList.map((lesson: any, index: number) => (
+      <div className="side-nav__element" key={lesson.id}>
+        <h3 className="side-nav__element-title">{lesson.title}</h3>
+        <p className="side-nav__element-label">{`Lesson ${++index}`}</p>
+      </div>
+    ));
+  };
+
   return (
     <div className="lessons">
       <section className="lessons__title">
         <Heading text="Lessons" />
       </section>
       <section className="lessons__content">
-        <SideNav items={lessonsList.map((lesson: any) => ({ id: lesson.id, title: lesson.title }))} />
-        <section className="lessons__list-container">
-          {lessonsList.map((lesson: any, index: number) => (
-            <LessonPreview {...lesson} index={index} key={lesson.id} />
-          ))}
-        </section>
+        <SideNav items={getLessonsList()} />
+        <Card className="lessons__list-container">
+          <Card.Body className="lessons__list-body">
+            {lessonsList.map((lesson: any, index: number) => (
+              <LessonPreview {...lesson} index={index} key={lesson.id} />
+            ))}
+          </Card.Body>
+        </Card>
       </section>
     </div>
   );

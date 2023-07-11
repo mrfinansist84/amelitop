@@ -7,7 +7,7 @@ class LessonsViewSet(viewsets.ModelViewSet):
     serializer_class = LessonSerializer
 
     def mutator(self, model, currentData, fieldList, action):
-        if (action == 'cteate'):
+        if (action == 'create'):
            result = model()
 
         if(action == 'update'):
