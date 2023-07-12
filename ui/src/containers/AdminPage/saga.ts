@@ -28,7 +28,9 @@ const getCurrentList = (userList: any[], updatedUser: User, isDelete: boolean) =
 
 export function* getUserListSaga() {
   try {
-    const response: User[] = yield call(AdminPageService.geUserListData)
+    const { accessToken } = yield select((state: IRootReducer) => state.authenticatedReducer);
+    const response: User[] = yield call(AdminPageService.getUserListData, accessToken)
+    yield console.log(response)
     yield put(updateUserList(response));
   } catch (e) {
     yield put(toggleBannerAction(true, 'ERROR', 'Failed to get list'));
@@ -37,7 +39,8 @@ export function* getUserListSaga() {
 
 export function* createProfileSaga(action: any) {
   try {
-    const response: User = yield call(AdminPageService.createProfile, action.payload);
+    const { accessToken } = yield select((state: IRootReducer) => state.authenticatedReducer);
+    const response: User = yield call(AdminPageService.createProfile, action.payload, accessToken);
     const { userList } = yield select((state: IRootReducer) => state.adminPageReducer);
     yield put(updateUserList([...userList, response]));
     yield put(toggleBannerAction(true, 'SUCCESS', 'Succesful created user'));
@@ -48,7 +51,8 @@ export function* createProfileSaga(action: any) {
 
 export function* updateProfileSaga(action: any) {
   try {
-    const response: User = yield call(AdminPageService.updateProfile, action.payload);
+    const { accessToken } = yield select((state: IRootReducer) => state.authenticatedReducer);
+    const response: User = yield call(AdminPageService.updateProfile, action.payload, accessToken);
     const { userList } = yield select((state: IRootReducer) => state.adminPageReducer);
     yield put(updateUserList(getCurrentList(userList, response, false)));
     yield put(toggleBannerAction(true, 'SUCCESS', 'Succesful updated profile'));
@@ -59,7 +63,9 @@ export function* updateProfileSaga(action: any) {
 
 export function* updateUserStatusSaga(action: any) {
   try {
-    const response: User = yield call(AdminPageService.updateStatus, action.status, action.userId);
+    const { accessToken } = yield select((state: IRootReducer) => state.authenticatedReducer);
+    const response: User = yield call(
+      AdminPageService.updateStatus, action.status, action.userId, accessToken);
     const { userList } = yield select((state: IRootReducer) => state.adminPageReducer);
     yield put(updateUserList(getCurrentList(userList, response, false)));
     yield put(toggleBannerAction(true, 'SUCCESS', 'Succesful updated users status'));
@@ -70,7 +76,8 @@ export function* updateUserStatusSaga(action: any) {
 
 export function* deleteUserSaga(action: any) {
   try {
-    yield call(AdminPageService.deleteUser, action.payload.id);
+    const { accessToken } = yield select((state: IRootReducer) => state.authenticatedReducer);
+    yield call(AdminPageService.deleteUser, action.payload.id, accessToken);
     const { userList } = yield select((state: IRootReducer) => state.adminPageReducer);
     yield put(updateUserList(getCurrentList(userList, action.payload, true)));
     yield put(toggleBannerAction(true, 'SUCCESS', 'Succesful deleted user'));

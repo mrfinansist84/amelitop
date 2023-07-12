@@ -19,3 +19,8 @@ export interface Lesson {
   picture: any[];
   video: any[];
 };
+
+export interface AuthParams {
+  refresh: string,
+  access: string
+};

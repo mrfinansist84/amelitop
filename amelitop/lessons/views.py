@@ -17,7 +17,6 @@ class LessonsViewSet(viewsets.ModelViewSet):
           setattr(result, item, currentData[item])
         return result
     
-    
     def get_queryset(self):
         return Lesson.objects.prefetch_related("text").prefetch_related("video").prefetch_related("picture")
 

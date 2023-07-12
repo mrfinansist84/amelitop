@@ -1,40 +1,42 @@
 import axios, { type AxiosResponse } from 'axios'
 import { type User } from '../../global/types';
+import { GlobalService } from '../../global/GlobalService';
 
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
-class AdminPageService {
-  public static async geUserListData() {
+class AdminPageService extends GlobalService {
+  public static async getUserListData(accessToken: string) {
     try {
-      const response: AxiosResponse<any> = await axios.get('/api/users/');
+      const response: AxiosResponse<any> = await axios.get('/api/users/', AdminPageService.getHeaders(accessToken));
+      return response.data;
+    } catch (e) {
+      console.log((e).response.data)
+      throw (e).response.data;
+    }
+  };
+
+  public static async createProfile(userProfile: User, accessToken: string) {
+    try {
+      const response: AxiosResponse<any> = await axios.post('/api/users/', userProfile, AdminPageService.getHeaders(accessToken));
       return response.data;
     } catch (e) {
       throw (e).response.data;
     }
   };
 
-  public static async createProfile(userProfile: User) {
+  public static async updateProfile(userProfile: User, accessToken: string) {
     try {
-      const response: AxiosResponse<any> = await axios.post('/api/users/', userProfile);
+      const response: AxiosResponse<any> = await axios.patch(`/api/users/${userProfile.id}/`, userProfile, AdminPageService.getHeaders(accessToken));
       return response.data;
     } catch (e) {
       throw (e).response.data;
     }
   };
 
-  public static async updateProfile(userProfile: User) {
-    try {
-      const response: AxiosResponse<any> = await axios.patch(`/api/users/${userProfile.id}/`, userProfile);
-      return response.data;
-    } catch (e) {
-      throw (e).response.data;
-    }
-  };
-
-  public static async deleteUser(userId: string) {
+  public static async deleteUser(userId: string, accessToken: string) {
     const config = {
       data: {
         id: userId
-      }
+      },
+      ...AdminPageService.getHeaders(accessToken)
     }
     try {
       const response: AxiosResponse<any> = await axios.delete(`/api/users/${userId}/`, config);
@@ -44,9 +46,9 @@ class AdminPageService {
     }
   };
 
-  public static async updateStatus(status: string, userId: string) {
+  public static async updateStatus(status: string, userId: string, accessToken: string) {
     try {
-      const response: AxiosResponse<any> = await axios.patch(`/api/users/${userId}/`, { profile: { is_blocked: status } });
+      const response: AxiosResponse<any> = await axios.patch(`/api/users/${userId}/`, { profile: { is_blocked: status } }, AdminPageService.getHeaders(accessToken));
       return response.data;
     } catch (e) {
       throw (e).response.data;

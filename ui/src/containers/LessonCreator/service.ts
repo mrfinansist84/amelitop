@@ -1,11 +1,11 @@
 import axios, { type AxiosResponse } from 'axios';
 import { type Lesson } from '../../global/types';
+import { GlobalService } from '../../global/GlobalService';
 
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
-class LessonCreatorService {
-  public static async saveLesson(lesson: Lesson) {
+class LessonCreatorService extends GlobalService {
+  public static async saveLesson(lesson: Lesson, accessToken: string) {
     try {
-      const response: AxiosResponse<any> = await axios.post('/api/lessons/', lesson);
+      const response: AxiosResponse<any> = await axios.post('/api/lessons/', lesson, LessonCreatorService.getHeaders(accessToken));
       return response.data;
     } catch (e) {
       throw e.response.data;

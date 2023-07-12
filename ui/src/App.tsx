@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+import Auth from './containers/Auth';
 import AdminPage from './containers/AdminPage';
 import Header from './containers/Header';
 import LessonsPage from './containers/LessonsPage';
@@ -9,6 +10,7 @@ import './App.scss';
 
 export const App = () => (
   <React.Fragment>
+    <Auth>
     <div className="header">
       <Header />
     </div>
@@ -22,5 +24,6 @@ export const App = () => (
         <Route path="*" element={<div>not found</div>} />
       </Routes>
     </div>
+    </Auth>
   </React.Fragment>
 );

@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 
+import { logoutRequest } from '../Auth/actions';
 import { type User } from '../../global/types';
 import Profile from '../../components/Profile';
 import Popover from '../../components/Popover';
@@ -24,6 +26,7 @@ const mockUser: User = {
 // after autharization we get in store current user and use him here
 // should add mechanizm for checking and updating current user
 export const Header: React.FC = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
@@ -34,12 +37,16 @@ export const Header: React.FC = () => {
     };
 
     if (targetPage === 'logout') {
-      // if logout - request for logout
-      console.log('logout');
+      dispatch(logoutRequest());
+      localStorage.clear();
     }
 
     if (targetPage === 'lessons') {
       navigate('/lessons');
+    }
+
+    if (targetPage === 'admin') {
+      navigate('/admin');
     }
 
     closeMenu();
@@ -72,6 +79,9 @@ export const Header: React.FC = () => {
               closeMenu={closeMenu}
               body={
                 <ul className="available-pages">
+                   <li className="available-pages__item" onClick={() => handleNavigation('admin')}>
+                    Admin
+                  </li>
                   <li className="available-pages__item" onClick={() => handleNavigation('profile')}>
                     Profile
                   </li>

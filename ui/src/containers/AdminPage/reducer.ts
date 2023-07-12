@@ -15,7 +15,7 @@ import {
 } from './constants';
 
 export const initialState = {
-  loading: true as boolean,
+  loading: false as boolean,
   error: null as any,
   userList: [] as any[],
   showBanner: false as boolean,
