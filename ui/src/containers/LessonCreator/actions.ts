@@ -1,7 +1,7 @@
 import { SAVE_LESSON_REQUEST, SAVE_LESSON_SUCCESS, SAVE_LESSON_ERROR } from './constants';
-import { type Lesson } from '../../global/types';
+import { type ILesson } from '../../global/types';
 
-export const saveLessonRequest = (lesson: Lesson) => ({
+export const saveLessonRequest = (lesson: ILesson) => ({
   type: SAVE_LESSON_REQUEST,
   payload: lesson
 });
