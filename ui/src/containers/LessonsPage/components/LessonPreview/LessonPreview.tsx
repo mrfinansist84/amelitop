@@ -1,11 +1,8 @@
 import * as React from 'react';
+import { type ILessonPreview } from '../../../../global/types';
 import './LessonPreview.scss';
 
-interface IProps {
-  id: any;
-  title: any;
-  index: number;
-}
+interface IProps extends ILessonPreview {}
 
 const LessonPreview = (props: IProps) => {
   return (

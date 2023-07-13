@@ -8,19 +8,46 @@ export interface User {
     phone?: string;
     role: string;
     is_blocked?: boolean;
-  }
+  };
   confirmPassword?: string;
-};
+}
 
-export interface Lesson {
-  id?: string;
+export interface ILesson {
+  id?: number;
   title: string;
-  text: any[];
-  picture: any[];
-  video: any[];
-};
+  text?: ITextBlock[];
+  picture?: IPicBlock[];
+  video?: IVideoBlock[];
+}
+
+export interface ILessonPreview {
+  id: number;
+  title: string;
+  index: number;
+}
+
+interface IBlock {
+  id: number;
+  title: string;
+  index: number;
+}
+
+interface ITextBlock extends IBlock {
+  text: string;
+  type: 'text';
+}
+
+interface IPicBlock extends IBlock {
+  link: string;
+  type: 'pic';
+}
+
+interface IVideoBlock extends IBlock {
+  link: string;
+  type: 'video';
+}
 
 export interface AuthParams {
-  refresh: string,
-  access: string
-};
+  refresh: string;
+  access: string;
+}
