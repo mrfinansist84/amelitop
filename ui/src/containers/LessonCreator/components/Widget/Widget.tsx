@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { useState } from 'react';
-import { Video } from '../';
+import { Video, Text } from '../';
 import './Widget.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { type IRootReducer } from '~/rootReducer';
@@ -58,9 +58,14 @@ const WidgetComponent = (props: IProps) => {
   const getElement = () => {
     let result;
 
-    // if (element.type === 'text') {
-    //   result = (<Text {...props} />);
-    // };
+    if (element.type === 'text') {
+      result = (<Text
+        editMode={editMode}
+        state={state}
+        handleChange={handleChange}
+        handleElementChange={handleElementChange}
+        />);
+    };
 
     if (element.type === 'video') {
       result = (<Video

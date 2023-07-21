@@ -15,6 +15,9 @@
     "@babel/preset-env": "^7.22.4",
     "@babel/preset-react": "^7.22.3",
     "@types/bootstrap": "^5.2.6",
+    "@types/react": "^18.2.7",
+    "@types/react-dom": "^18.2.4",
+    "@types/react-draft-wysiwyg": "^1.13.4",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
     "autoprefixer": "^10.4.14",
@@ -39,21 +42,21 @@
     "typescript": "^5.0.4",
     "webpack": "^5.84.1",
     "webpack-cli": "^5.1.1",
-    "webpack-dev-server": "^4.15.0",
-    "@types/react": "^18.2.7",
-    "@types/react-dom": "^18.2.4"
+    "webpack-dev-server": "^4.15.0"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
+    "draft-js": "^0.11.7",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
+    "react-draft-wysiwyg": "^1.15.0",
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.11.2",
     "redux": "^4.2.1",
-    "redux-saga": "^1.2.3",
-    "@reduxjs/toolkit": "^1.9.5"
+    "redux-saga": "^1.2.3"
   },
   "engines": {
     "node": "14.17.6",
