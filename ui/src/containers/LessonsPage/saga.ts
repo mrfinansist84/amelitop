@@ -1,14 +1,12 @@
-import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { getAllLessonsSuccess, getAllLessonsError } from './actions';
 import { GET_ALL_LESSONS_REQUEST } from './constants';
 import LessonsService from './service';
 import { type ILesson } from '../../global/types';
-import { type IRootReducer } from '../../rootReducer';
 
 export function* getLessonsListSaga() {
   try {
-    const { accessToken } = yield select((state: IRootReducer) => state.authenticatedReducer);
-    const data: ILesson[] = yield call(LessonsService.getLessons, accessToken);
+    const data: ILesson[] = yield call(LessonsService.getLessons);
     yield put(getAllLessonsSuccess(data));
   } catch (e) {
     yield put(getAllLessonsError(e));

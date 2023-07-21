@@ -1,19 +1,21 @@
 import { combineReducers } from 'redux';
 import { adminPageReducer } from './containers/AdminPage/reducer';
-import { lessonsReducer } from './containers/LessonsPage/reducer';
-import { lessonCreatorReducer } from './containers/LessonCreator/reducer';
 import { authenticatedReducer } from './containers/Auth/reducer';
+import { lessonCreatorReducer } from './containers/LessonCreator/reducer';
+import { lessonsReducer } from './containers/LessonsPage/reducer';
 
 export type IRootReducer = {
   adminPageReducer: ReturnType<typeof adminPageReducer>;
-  lessonsReducer: ReturnType<typeof lessonsReducer>;
+  authenticatedReducer: ReturnType<typeof authenticatedReducer>;
   lessonCreatorReducer: ReturnType<typeof lessonCreatorReducer>;
-  authenticatedReducer: ReturnType<typeof authenticatedReducer>
+  lessonsReducer: ReturnType<typeof lessonsReducer>;
 };
 
 export const rootReducer = combineReducers({
   adminPageReducer,
-  lessonsReducer,
+  authenticatedReducer,
   lessonCreatorReducer,
-  authenticatedReducer
+  lessonsReducer
 });
+
+export default rootReducer;
