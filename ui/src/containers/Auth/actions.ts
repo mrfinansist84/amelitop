@@ -10,7 +10,7 @@ import {
   POLL_TOKEN_START,
   POLL_TOKEN_STOP
 } from './constants';
-import { type AuthParams } from '../../global/types';
+import { type AuthParams } from '~/global/types';
 
 interface LoginForm {
   email: string;
@@ -60,25 +60,23 @@ export const toggleBannerAction = (state: boolean, status: string, message: stri
   message
 });
 
-export const pollTokenStart = () =>
-  ({
-    type: POLL_TOKEN_START
-  });
+export const pollTokenStart = () => ({
+  type: POLL_TOKEN_START
+});
 
-export const pollTokenStop = (error?: any) =>
-  ({
-    type: POLL_TOKEN_STOP,
-    payload: error
-  });
+export const pollTokenStop = (error?: any) => ({
+  type: POLL_TOKEN_STOP,
+  payload: error
+});
 
 export type Actions =
-    | ReturnType<typeof getAccessTokenRequest>
-    | ReturnType<typeof getAccessTokenSuccess>
-    | ReturnType<typeof getAccessTokenError>
-    | ReturnType<typeof refreshTokenRequest>
-    | ReturnType<typeof refreshTokenSuccess>
-    | ReturnType<typeof refreshTokenError>
-    | ReturnType<typeof logoutRequest>
-    | ReturnType<typeof toggleBannerAction>
-    | ReturnType<typeof pollTokenStart>
-    | ReturnType<typeof pollTokenStop>;
+  | ReturnType<typeof getAccessTokenRequest>
+  | ReturnType<typeof getAccessTokenSuccess>
+  | ReturnType<typeof getAccessTokenError>
+  | ReturnType<typeof refreshTokenRequest>
+  | ReturnType<typeof refreshTokenSuccess>
+  | ReturnType<typeof refreshTokenError>
+  | ReturnType<typeof logoutRequest>
+  | ReturnType<typeof toggleBannerAction>
+  | ReturnType<typeof pollTokenStart>
+  | ReturnType<typeof pollTokenStop>;

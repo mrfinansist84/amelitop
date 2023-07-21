@@ -1,9 +1,8 @@
 import { type AxiosResponse } from 'axios';
-import { httpClient } from '../../global/api';
-import { type User } from '../../global/types';
-import { GlobalService } from '../../global/GlobalService';
+import { httpClient } from '~/global/api';
+import { type User } from '~/global/types';
 
-class AdminPageService extends GlobalService {
+class AdminPageService {
   public static async getUserListData() {
     try {
       const response: AxiosResponse<any> = await httpClient.get('/users/');

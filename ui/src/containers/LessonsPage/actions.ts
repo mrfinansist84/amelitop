@@ -1,5 +1,5 @@
 import { GET_ALL_LESSONS_REQUEST, GET_ALL_LESSONS_SUCCESS, GET_ALL_LESSONS_ERROR } from './constants';
-import { type ILesson } from '../../global/types';
+import { type ILesson } from '~/global/types';
 
 export const getAllLessonsRequest = () => ({
   type: GET_ALL_LESSONS_REQUEST

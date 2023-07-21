@@ -2,10 +2,10 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { type User } from '../../global/types';
+import { type User } from '~/global/types';
 import Form from './components/Form';
 import Modal from '../Modal';
-import { initialUser } from '../../global/constants';
+import { initialUser } from '~/global/constants';
 import './Profile.scss';
 
 interface Props {
@@ -25,7 +25,7 @@ export const Profile: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setFormData(transformToFlatData(props.user))
+    setFormData(transformToFlatData(props.user));
   }, [props.user]);
 
   const handleChanges = (e: any) => {
@@ -34,7 +34,7 @@ export const Profile: React.FC<Props> = (props) => {
   };
 
   const transformDataForRequest = (user: any) => {
-    return ({
+    return {
       id: user.id,
       email: user.email,
       password: user.password,
@@ -45,7 +45,7 @@ export const Profile: React.FC<Props> = (props) => {
         role: user.role,
         is_blocked: user.is_blocked
       }
-    })
+    };
   };
 
   const saveChangesToProfile = () => {
@@ -53,7 +53,7 @@ export const Profile: React.FC<Props> = (props) => {
       dispatch(props.createProfile(transformDataForRequest(data)));
     } else {
       dispatch(props.updateProfile(transformDataForRequest(data)));
-    };
+    }
     closeProfile();
   };
 
@@ -72,12 +72,7 @@ export const Profile: React.FC<Props> = (props) => {
       isShowFooter={!props.readOnlyMode}
       btnCloseName="Cancel"
       btnSaveName="Save"
-      body={
-        <Form
-          handleChanges={handleChanges}
-          user={data}
-          readOnlyMode={props.readOnlyMode} />
-      }
+      body={<Form handleChanges={handleChanges} user={data} readOnlyMode={props.readOnlyMode} />}
     />
   );
 };

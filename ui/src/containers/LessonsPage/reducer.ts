@@ -1,6 +1,6 @@
 import { type Action } from './actions';
 import { GET_ALL_LESSONS_REQUEST, GET_ALL_LESSONS_SUCCESS, GET_ALL_LESSONS_ERROR } from './constants';
-import { type ILesson, type ILessonPreview } from '../../global/types';
+import { type ILesson, type ILessonPreview } from '~/global/types';
 
 export const initialState = {
   error: null as any,

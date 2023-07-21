@@ -1,9 +1,8 @@
 import { type AxiosResponse } from 'axios';
-import { httpClient } from '../../global/api';
-import { GlobalService } from '../../global/GlobalService';
-import { type ILesson } from '../../global/types';
+import { httpClient } from '~/global/api';
+import { type ILesson } from '~/global/types';
 
-class LessonsService extends GlobalService {
+class LessonsService {
   public static async getLessons() {
     try {
       const response: AxiosResponse<ILesson> = await httpClient.get('/lessons/');

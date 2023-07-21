@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './UserListItem.scss';
-import { type User } from '../../../../global/types';
+import { type User } from '~/global/types';
 
 interface Props {
   user: User;

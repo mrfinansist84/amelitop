@@ -16,31 +16,31 @@ const WidgetComponent = (props: IProps) => {
     let result;
 
     if (element.type === 'text') {
-      result = (<Text {...element} />);
-    };
+      result = <Text {...element} />;
+    }
 
     if (element.type === 'video') {
-      result = (<Video {...element} />);
-    };
+      result = <Video {...element} />;
+    }
 
     if (element.type === 'picture') {
-      result = (<Picture {...element} />);
+      result = <Picture {...element} />;
     }
 
     return result;
-  }
+  };
 
   return (
-   <Card className="widget-container">
+    <Card className="widget-container">
       <Card.Header>
-        <div className='card-header-container' id={String(elementId)}>
+        <div className="card-header-container" id={String(elementId)}>
           <span>{element.type}</span>
-          <Button variant="outline-danger" onClick={() => props.deleteItem(elementId)}>Delete</Button>
+          <Button variant="outline-danger" onClick={() => props.deleteItem(elementId)}>
+            Delete
+          </Button>
         </div>
       </Card.Header>
-      <Card.Body>
-        { getElement() }
-      </Card.Body>
+      <Card.Body>{getElement()}</Card.Body>
     </Card>
   );
 };

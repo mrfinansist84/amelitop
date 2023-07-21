@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type ILessonPreview } from '../../../../global/types';
+import { type ILessonPreview } from '~/global/types';
 import './LessonPreview.scss';
 
 interface IProps extends ILessonPreview {}
