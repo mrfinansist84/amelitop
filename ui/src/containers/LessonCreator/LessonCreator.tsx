@@ -12,6 +12,7 @@ import { saveLessonRequest } from './actions';
 
 import './LessonCreator.scss';
 
+// this component will be for all states - read, create, edit lesson
 export const LessonCreator: React.FC = () => {
   const dispatch = useDispatch();
   const [elementsList, setElementsList] = useState([]);
@@ -88,6 +89,17 @@ export const LessonCreator: React.FC = () => {
     });
   };
 
+  const handleElementChange = (state: any, elementId: string) => {
+    const updatedList = structuredClone(elementsList);
+    const targetElementIndex = elementsList.findIndex(item => item.elementId === elementId);
+    updatedList[targetElementIndex] = {
+      ...updatedList[targetElementIndex],
+      ...state
+    };
+
+    setElementsList(updatedList);
+  };
+
   return (
     <div className="lessons">
       <section className="lessons__title">
@@ -95,37 +107,38 @@ export const LessonCreator: React.FC = () => {
       </section>
       <section className="lessons__content">
         <SideNav items={availableElementsList()} />
-        <Card className="lessons__list-container">
-          <Card.Body>
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                <Form>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Lesson`s Title</Form.Label>
-                    <Form.Control
-                      value={generalInfo.title}
-                      onChange={(e) => handleChange(e, 'title')}
-                      type="text"
-                      className="form-control"
-                      id="lessonTitle"
-                      placeholder="Enter title of the lesson"
+          <Card className="lessons__list-container">
+            <Card.Body>
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <Form>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Lesson`s Title</Form.Label>
+                      <Form.Control
+                        value={generalInfo.title}
+                        onChange={(e) => handleChange(e, 'title')}
+                        type="text"
+                        className="form-control"
+                        id="lessonTitle"
+                        placeholder="Enter title of the lesson" />
+                    </Form.Group>
+                  </Form>
+                </ListGroup.Item>
+                  <ListGroup.Item>
+                  { elementsList.map((element: any) => (
+                    <Widget
+                      deleteItem={deleteItem}
+                      element={element}
+                      key={getTemporaryId()}
+                      elementId={element.elementId}
+                      handleElementChange={handleElementChange}
+                      editMode={true} // temporary value, next step - editMode depens on user's actions - read/create/edit lesson.
                     />
-                  </Form.Group>
-                </Form>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {elementsList.map((element: any) => (
-                  <Widget
-                    deleteItem={deleteItem}
-                    element={element}
-                    key={getTemporaryId()}
-                    elementId={element.elementId}
-                  />
-                ))}
-              </ListGroup.Item>
-            </ListGroup>
-          </Card.Body>
-        </Card>
+                  ))}
+                </ListGroup.Item>
+              </ListGroup>
+            </Card.Body>
+          </Card>
       </section>
     </div>
   );
