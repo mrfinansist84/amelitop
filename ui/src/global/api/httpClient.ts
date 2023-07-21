@@ -1,6 +1,6 @@
 import axios from 'axios';
-import store from '../../store';
-import { API_BASE_URL } from '../constants';
+import store from '~/store';
+import { API_BASE_URL } from '~/global/constants';
 
 const httpClient = axios.create({
   baseURL: API_BASE_URL

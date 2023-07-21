@@ -12,7 +12,7 @@ import {
   UPDATE_STATUS_ERROR,
   TOGGLE_BANNER
 } from './constants';
-import { type User } from '../../global/types';
+import { type User } from '~/global/types';
 
 export const getAllUsersRequest = () => ({
   type: GET_ALL_USERS_REQUEST
@@ -77,15 +77,15 @@ export const toggleBannerAction = (state: boolean, status: string, message: stri
 });
 
 export type Actions =
-    | ReturnType<typeof getAllUsersRequest>
-    | ReturnType<typeof getAllUsersError>
-    | ReturnType<typeof createUserRequest>
-    | ReturnType<typeof updateUserList>
-    | ReturnType<typeof createUserError>
-    | ReturnType<typeof updateUserRequest>
-    | ReturnType<typeof updateUserError>
-    | ReturnType<typeof deleteUserRequest>
-    | ReturnType<typeof deleteUserError>
-    | ReturnType<typeof updateUserStatusRequest>
-    | ReturnType<typeof updateUserStatusError>
-    | ReturnType<typeof toggleBannerAction>;
+  | ReturnType<typeof getAllUsersRequest>
+  | ReturnType<typeof getAllUsersError>
+  | ReturnType<typeof createUserRequest>
+  | ReturnType<typeof updateUserList>
+  | ReturnType<typeof createUserError>
+  | ReturnType<typeof updateUserRequest>
+  | ReturnType<typeof updateUserError>
+  | ReturnType<typeof deleteUserRequest>
+  | ReturnType<typeof deleteUserError>
+  | ReturnType<typeof updateUserStatusRequest>
+  | ReturnType<typeof updateUserStatusError>
+  | ReturnType<typeof toggleBannerAction>;

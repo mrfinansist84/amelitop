@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { saveLessonSuccess, saveLessonError } from './actions';
 import { SAVE_LESSON_REQUEST } from './constants';
 import LessonCreatorService from './service';
-import { type ILesson } from '../../global/types';
+import { type ILesson } from '~/global/types';
 
 export function* saveLessonSaga(action: any) {
   try {

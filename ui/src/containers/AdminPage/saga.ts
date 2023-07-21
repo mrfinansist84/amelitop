@@ -1,5 +1,5 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects';
-import { type User } from '../../global/types';
+import { type User } from '~/global/types';
 
 import { updateUserList, toggleBannerAction } from './actions';
 import {
@@ -10,7 +10,7 @@ import {
   DELETE_USER_REQUEST
 } from './constants';
 import AdminPageService from './service';
-import { type IRootReducer } from '../../rootReducer';
+import { type IRootReducer } from '~/rootReducer';
 
 const getCurrentList = (userList: any[], updatedUser: User, isDelete: boolean) => {
   const userIndex = userList.findIndex((item: User) => item.id === updatedUser.id);

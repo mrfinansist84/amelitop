@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import { LessonPreview } from './components';
-import { Heading, Loader, SideNav } from '../../components';
-import { type ILessonPreview } from '../../global/types';
-import { type IRootReducer } from '../../rootReducer';
+import { Heading, Loader, SideNav } from '~/components';
+import { type ILessonPreview } from '~/global/types';
+import { type IRootReducer } from '~/rootReducer';
 import { getAllLessonsRequest } from './actions';
 
 import './LessonsPage.scss';

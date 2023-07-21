@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 
-import { logoutRequest } from '../Auth/actions';
-import { type User } from '../../global/types';
-import Profile from '../../components/Profile';
-import Popover from '../../components/Popover';
+import { logoutRequest } from '~/containers/Auth/actions';
+import { type User } from '~/global/types';
+import Profile from '~/components/Profile';
+import Popover from '~/components/Popover';
 import './Header.scss';
 
 const mockUser: User = {
@@ -34,7 +34,7 @@ export const Header: React.FC = () => {
   const handleNavigation = (targetPage: string) => {
     if (targetPage === 'profile') {
       setOpenProfile(true); // open modal with users data
-    };
+    }
 
     if (targetPage === 'logout') {
       dispatch(logoutRequest());
@@ -58,14 +58,7 @@ export const Header: React.FC = () => {
 
   return (
     <>
-    {openProfile && (
-      <Profile
-        user={mockUser}
-        readOnlyMode
-        onClose={() => setOpenProfile(false)}
-        show={openProfile}
-    />
-    )}
+      {openProfile && <Profile user={mockUser} readOnlyMode onClose={() => setOpenProfile(false)} show={openProfile} />}
       <nav className="navbar navbar-light bg-light header-container">
         <div className="container-fluid">
           <a className="navbar-brand">
@@ -79,7 +72,7 @@ export const Header: React.FC = () => {
               closeMenu={closeMenu}
               body={
                 <ul className="available-pages">
-                   <li className="available-pages__item" onClick={() => handleNavigation('admin')}>
+                  <li className="available-pages__item" onClick={() => handleNavigation('admin')}>
                     Admin
                   </li>
                   <li className="available-pages__item" onClick={() => handleNavigation('profile')}>

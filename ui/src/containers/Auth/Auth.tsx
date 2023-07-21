@@ -4,25 +4,21 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { toggleBannerAction, pollTokenStop, getAccessTokenSuccess, pollTokenStart } from './actions';
 
-import { type IRootReducer } from '../../rootReducer';
+import { type IRootReducer } from '~/rootReducer';
 import { LoginForm } from './components/LoginForm';
-import Loader from '../../components/Loader';
-import Banner from '../../components/Banner';
+import Loader from '~/components/Loader';
+import Banner from '~/components/Banner';
 import './Auth.scss';
 
 export const Auth: React.FC<any> = ({ children }) => {
   const dispatch = useDispatch();
-  const {
-    isAuthenticated,
-    loading,
-    showBanner,
-    bannerStatus,
-    bannerMessage
-  } = useSelector((state: IRootReducer) => state.authenticatedReducer);
+  const { isAuthenticated, loading, showBanner, bannerStatus, bannerMessage } = useSelector(
+    (state: IRootReducer) => state.authenticatedReducer
+  );
 
   const closeBanner = (state: boolean) => {
     dispatch(toggleBannerAction(state, '', ''));
-  }
+  };
 
   const checkAuth = () => {
     const authData = JSON.parse(localStorage.getItem('auth'));
@@ -33,28 +29,33 @@ export const Auth: React.FC<any> = ({ children }) => {
   };
 
   useEffect(() => {
-    checkAuth()
+    checkAuth();
     return () => {
       dispatch(pollTokenStop());
       localStorage.clear();
     };
-  }, [])
+  }, []);
 
   return (
     <>
-    {loading && <Loader />}
-    {showBanner && (
-     <Banner
-       show={showBanner}
-       closeBanner={closeBanner}
-       message={bannerMessage}
-       status={bannerStatus}
-       autoHide={false}
-    />)}
+      {loading && <Loader />}
+      {showBanner && (
+        <Banner
+          show={showBanner}
+          closeBanner={closeBanner}
+          message={bannerMessage}
+          status={bannerStatus}
+          autoHide={false}
+        />
+      )}
       <div>
-        {!isAuthenticated && <div className="login-container"><LoginForm /></div>}
-        {isAuthenticated && (children)}
+        {!isAuthenticated && (
+          <div className="login-container">
+            <LoginForm />
+          </div>
+        )}
+        {isAuthenticated && children}
       </div>
-      </>
-  )
-}
+    </>
+  );
+};
