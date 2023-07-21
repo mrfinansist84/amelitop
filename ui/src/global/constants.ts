@@ -1,3 +1,6 @@
+export const API_BASE_URL = '/api' as const;
+export const MOUNT_NODE_ID = 'root' as const;
+
 export const initialUser = {
   id: '',
   email: '',

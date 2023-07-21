@@ -1,10 +1,7 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 import { type User } from '../../global/types';
 
-import {
-  updateUserList,
-  toggleBannerAction
-} from './actions';
+import { updateUserList, toggleBannerAction } from './actions';
 import {
   GET_ALL_USERS_REQUEST,
   CREATE_USER_REQUEST,
@@ -21,70 +18,64 @@ const getCurrentList = (userList: any[], updatedUser: User, isDelete: boolean) =
   if (isDelete) {
     list.splice(userIndex, 1);
     return list;
-  };
+  }
   list.splice(userIndex, 1, updatedUser);
   return list;
 };
 
 export function* getUserListSaga() {
   try {
-    const { accessToken } = yield select((state: IRootReducer) => state.authenticatedReducer);
-    const response: User[] = yield call(AdminPageService.getUserListData, accessToken)
-    yield console.log(response)
+    const response: User[] = yield call(AdminPageService.getUserListData);
+    yield console.log(response);
     yield put(updateUserList(response));
   } catch (e) {
     yield put(toggleBannerAction(true, 'ERROR', 'Failed to get list'));
   }
-};
+}
 
 export function* createProfileSaga(action: any) {
   try {
-    const { accessToken } = yield select((state: IRootReducer) => state.authenticatedReducer);
-    const response: User = yield call(AdminPageService.createProfile, action.payload, accessToken);
+    const response: User = yield call(AdminPageService.createProfile, action.payload);
     const { userList } = yield select((state: IRootReducer) => state.adminPageReducer);
     yield put(updateUserList([...userList, response]));
     yield put(toggleBannerAction(true, 'SUCCESS', 'Succesful created user'));
   } catch (e) {
     yield put(toggleBannerAction(true, 'ERROR', 'Failed to create user'));
   }
-};
+}
 
 export function* updateProfileSaga(action: any) {
   try {
-    const { accessToken } = yield select((state: IRootReducer) => state.authenticatedReducer);
-    const response: User = yield call(AdminPageService.updateProfile, action.payload, accessToken);
+    const response: User = yield call(AdminPageService.updateProfile, action.payload);
     const { userList } = yield select((state: IRootReducer) => state.adminPageReducer);
     yield put(updateUserList(getCurrentList(userList, response, false)));
     yield put(toggleBannerAction(true, 'SUCCESS', 'Succesful updated profile'));
   } catch (e) {
     yield put(toggleBannerAction(true, 'ERROR', 'Failed to update profile'));
   }
-};
+}
 
 export function* updateUserStatusSaga(action: any) {
   try {
-    const { accessToken } = yield select((state: IRootReducer) => state.authenticatedReducer);
-    const response: User = yield call(
-      AdminPageService.updateStatus, action.status, action.userId, accessToken);
+    const response: User = yield call(AdminPageService.updateStatus, action.status, action.userId);
     const { userList } = yield select((state: IRootReducer) => state.adminPageReducer);
     yield put(updateUserList(getCurrentList(userList, response, false)));
     yield put(toggleBannerAction(true, 'SUCCESS', 'Succesful updated users status'));
   } catch (e) {
     yield put(toggleBannerAction(true, 'ERROR', 'Failed to update users status'));
   }
-};
+}
 
 export function* deleteUserSaga(action: any) {
   try {
-    const { accessToken } = yield select((state: IRootReducer) => state.authenticatedReducer);
-    yield call(AdminPageService.deleteUser, action.payload.id, accessToken);
+    yield call(AdminPageService.deleteUser, action.payload.id);
     const { userList } = yield select((state: IRootReducer) => state.adminPageReducer);
     yield put(updateUserList(getCurrentList(userList, action.payload, true)));
     yield put(toggleBannerAction(true, 'SUCCESS', 'Succesful deleted user'));
   } catch (e) {
     yield put(toggleBannerAction(true, 'ERROR', 'Failed to deleted user'));
   }
-};
+}
 
 export function* adminPageSagaWatcher() {
   yield takeLatest(GET_ALL_USERS_REQUEST, getUserListSaga);
@@ -92,4 +83,4 @@ export function* adminPageSagaWatcher() {
   yield takeLatest(UPDATE_USER_REQUEST, updateProfileSaga);
   yield takeLatest(DELETE_USER_REQUEST, deleteUserSaga);
   yield takeLatest(UPDATE_STATUS_REQUEST, updateUserStatusSaga);
-};
+}
