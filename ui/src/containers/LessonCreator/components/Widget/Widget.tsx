@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { useState } from 'react';
-
 import { Video } from '../';
 import './Widget.scss';
 import { useSelector, useDispatch } from 'react-redux';
