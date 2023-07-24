@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Form, Card, ListGroup } from 'react-bootstrap';
 
@@ -17,7 +17,10 @@ export const LessonCreator: React.FC = () => {
   const dispatch = useDispatch();
   const [elementsList, setElementsList] = useState([]);
   const [generalInfo, setGeneralInfo] = useState(defaultLesson);
-  const { loading } = useSelector((state: IRootReducer) => state.lessonCreatorReducer);
+  const loading = useSelector((state: IRootReducer) => state.lessonCreatorReducer.loading,
+    shallowEqual);
+  // const widgetsList = useSelector((state: IRootReducer) => state.lessonCreatorReducer.widgetsList, 
+  //   shallowEqual);
   const navigate = useNavigate();
 
   if (loading) {
@@ -28,15 +31,17 @@ export const LessonCreator: React.FC = () => {
 
   const addElement = (type: string) => {
     const updatedElementsList = structuredClone(elementsList);
+
     const element = defaultElement[type as keyof typeof defaultElement];
-    element.index = elementsList.length + 1;
     element.elementId = getTemporaryId();
+    console.log(element.elementId, getTemporaryId())
     updatedElementsList.push(element);
 
     setElementsList(updatedElementsList);
   };
 
   const availableElementsList = () => {
+    console.log(56456)
     return addingBtn.map((item: any) => (
       <div
         className="side-nav__element d-flex align-items-center justify-content-center"
@@ -48,56 +53,51 @@ export const LessonCreator: React.FC = () => {
     ));
   };
 
-  const changeOrder = (filteredList: any) =>
-    filteredList.forEach((item: any, index: number) => {
+  const setOrder = (currentWidgetData: any) =>
+    currentWidgetData.map((item: any, index: number) => {
       item.index = index + 1;
+      return item;
     });
 
   const deleteItem = (id: string) => {
     const filteredList = elementsList.filter((item) => item.elementId !== id);
 
-    changeOrder(filteredList);
     setElementsList(filteredList);
   };
 
   const handleCancel = () => navigate('/lessons');
 
-  const getDataByType = (type: string) => {
-    const list = elementsList.filter((item) => item.type === type);
-    list.forEach((item) => {
+  const getDataByType = (list: any[], type: string) => {
+    const filteredList = list.filter((item) => item.type === type);
+    filteredList.forEach((item) => {
       delete item.elementId;
       return item;
     });
-    return list;
+    return filteredList;
   };
 
-  const transformLessonData = () => ({
-    ...generalInfo,
-    text: getDataByType('text'),
-    picture: getDataByType('picture'),
-    video: getDataByType('video')
-  });
+  const transformLessonData = () => {
+    // отфильтровать по каркасу(elementsList)
+    // установить порядковый номерa
+    let widgetsList
+    const list = setOrder(widgetsList);
+    return {
+      ...generalInfo,
+      text: getDataByType(list, 'text'),
+      picture: getDataByType(list, 'picture'),
+      video: getDataByType(list, 'video')
+    };
+  };
 
   const handleSave = () => {
     dispatch(saveLessonRequest(transformLessonData()));
   };
 
-  const handleChange = (e: any, field: string) => {
+  const handleChangeGeneralInfo = (e: any, field: string) => {
     setGeneralInfo({
       ...generalInfo,
       [field]: e.target.value
     });
-  };
-
-  const handleElementChange = (state: any, elementId: string) => {
-    const updatedList = structuredClone(elementsList);
-    const targetElementIndex = elementsList.findIndex(item => item.elementId === elementId);
-    updatedList[targetElementIndex] = {
-      ...updatedList[targetElementIndex],
-      ...state
-    };
-
-    setElementsList(updatedList);
   };
 
   return (
@@ -116,7 +116,7 @@ export const LessonCreator: React.FC = () => {
                       <Form.Label>Lesson`s Title</Form.Label>
                       <Form.Control
                         value={generalInfo.title}
-                        onChange={(e) => handleChange(e, 'title')}
+                        onChange={(e) => handleChangeGeneralInfo(e, 'title')}
                         type="text"
                         className="form-control"
                         id="lessonTitle"
@@ -131,7 +131,6 @@ export const LessonCreator: React.FC = () => {
                       element={element}
                       key={getTemporaryId()}
                       elementId={element.elementId}
-                      handleElementChange={handleElementChange}
                       editMode={true} // temporary value, next step - editMode depens on user's actions - read/create/edit lesson.
                     />
                   ))}

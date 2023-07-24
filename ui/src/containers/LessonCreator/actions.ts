@@ -16,7 +16,13 @@ export const saveLessonError = (error: any) => ({
   error
 });
 
+export const setWidgetsList = (widgetsList: any[]) => ({
+  type: 'SET_WIDGET_LIST',
+  widgetsList
+});
+
 export type Action =
   | ReturnType<typeof saveLessonRequest>
   | ReturnType<typeof saveLessonSuccess>
-  | ReturnType<typeof saveLessonError>;
+  | ReturnType<typeof saveLessonError>
+  | ReturnType<typeof setWidgetsList>;

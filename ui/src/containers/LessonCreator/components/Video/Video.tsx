@@ -4,14 +4,13 @@ import Row from 'react-bootstrap/Row';
 import './Video.scss';
 
 interface IProps {
-  state: any;
-  handleElementChange: () => void;
   editMode: boolean;
   handleChange: any;
+  state: any;
 }
 
 const Video = (props: IProps) => {
-  const { state, handleElementChange, handleChange, editMode } = props;
+  const { editMode, handleChange, state } = props;
 
   return (
     <>
@@ -24,7 +23,6 @@ const Video = (props: IProps) => {
                 value={state.title}
                 type="text"
                 className="form-control"
-                onBlur={handleElementChange}
                 placeholder="Enter title of the element"
                 onChange={(e) => handleChange(e, 'title')} />
             </label>
@@ -36,7 +34,6 @@ const Video = (props: IProps) => {
                 value={state.link}
                 type="text"
                 className="form-control"
-                onBlur={handleElementChange}
                 onChange={(e) => handleChange(e, 'link')}
                 placeholder="Enter link to the video" />
             </label>

@@ -1,30 +1,54 @@
 import * as React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { useState } from 'react';
+
 import { Video } from '../';
 import './Widget.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { type IRootReducer } from '~/rootReducer';
+import { setWidgetsList } from '../../actions';
 
 interface IProps {
   deleteItem: (id: string) => void;
   element: any;
   elementId: string;
-  handleElementChange: (state: any, elementId: string) => void;
   editMode: boolean;
 }
 
 const WidgetComponent = (props: IProps) => {
-  const { element, elementId, editMode } = props;
+  const dispatch = useDispatch();
+  const widgetsList = useSelector((state: IRootReducer) => state.lessonCreatorReducer.widgetsList);
+  const { element, elementId, editMode, deleteItem } = props;
   const [state, setState] = useState(element);
 
-  const handleElementChange = () => {
-    props.handleElementChange(state, elementId);
-  };
+  React.useEffect(() => {
+    const updatedList = structuredClone(widgetsList);
+    const targetElementIndex = widgetsList.findIndex(item => item.elementId === elementId);
+    console.log(elementId, updatedList, updatedList[targetElementIndex])
+    setState(updatedList[targetElementIndex] ? updatedList[targetElementIndex] : element)
+  }, [element]);
 
   const handleChange = (e: any, field: string) => {
-    setState({
+    const updatedState = {
       ...state,
       [field]: e.target.value
-    })
+    }
+    setState({
+      updatedState
+    });
+
+    handleElementChange(updatedState);
+  };
+
+  const handleElementChange = (state: any) => {
+    const updatedList = structuredClone(widgetsList);
+    const targetElementIndex = widgetsList.findIndex(item => item.elementId === elementId);
+    updatedList[targetElementIndex !== -1 ? targetElementIndex : 0] = {
+      ...updatedList[targetElementIndex],
+      ...state
+    };
+
+    dispatch(setWidgetsList(updatedList));
   };
 
   const getElement = () => {
@@ -37,9 +61,8 @@ const WidgetComponent = (props: IProps) => {
     if (element.type === 'video') {
       result = (<Video
         editMode={editMode}
-        state={state}
         handleChange={handleChange}
-        handleElementChange={handleElementChange}
+        state={state}
         />
       )
     };
@@ -55,8 +78,8 @@ const WidgetComponent = (props: IProps) => {
     <Card className="widget-container">
       <Card.Header>
         <div className='card-header-container' id={String(elementId)}>
-          <span>Element №{element.index}</span>
-          <Button variant="outline-danger" onClick={() => props.deleteItem(elementId)}>Delete</Button>
+          <span>Element {element.type}</span>
+          <Button variant="outline-danger" onClick={() => deleteItem(elementId)}>Delete</Button>
         </div>
       </Card.Header>
       <Card.Body>
