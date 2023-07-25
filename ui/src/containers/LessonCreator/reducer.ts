@@ -1,10 +1,11 @@
 import { type Action } from './actions';
-import { SAVE_LESSON_REQUEST, SAVE_LESSON_SUCCESS, SAVE_LESSON_ERROR } from './constants';
+import { SAVE_LESSON_REQUEST, SAVE_LESSON_SUCCESS, SAVE_LESSON_ERROR, SET_WIDGET_LIST } from './constants';
 
 export const initialState = {
   error: null as any,
   lesson: null as any,
-  loading: false
+  loading: false,
+  widgetsList: [] as any[]
 };
 
 type ReduxState = typeof initialState;
@@ -26,8 +27,13 @@ export const lessonCreatorReducer = (
     case SAVE_LESSON_ERROR:
       return {
         ...state,
-        error: action.error,
+        error: null,
         loading: false
+      };
+    case SET_WIDGET_LIST:
+      return {
+        ...state,
+        widgetsList: action.widgetsList
       };
     default: {
       return state;

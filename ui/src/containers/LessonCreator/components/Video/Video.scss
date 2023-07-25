@@ -1,28 +1,23 @@
-.lesson-preview {
+.element {
   display: flex;
   flex-direction: column;
   gap: 10px;
   background-color: #ffffff;
   border-radius: 20px;
-  padding: 10px;
+  padding: 0;
 
-  .lesson-preview__content {
-    font-size: 16px;
-  }
-
-  .lesson-preview__title {
+  .element__title {
     font-size: 32px;
     font-weight: 500;
   }
 
-  .lesson-preview__metadata {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 16px;
+  .element__body {
+    .form-control {
+      margin-top: 8px;
+    }
 
-    .lesson-preview__owner {
-      color: #8b8b8b;
+    .form-control-labels {
+      margin-bottom: 15px;
     }
   }
 }

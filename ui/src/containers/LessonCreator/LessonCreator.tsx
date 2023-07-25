@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Form, Card, ListGroup } from 'react-bootstrap';
 
@@ -12,31 +12,26 @@ import { saveLessonRequest } from './actions';
 
 import './LessonCreator.scss';
 
+// this component will be for all states - read, create, edit lesson
 export const LessonCreator: React.FC = () => {
   const dispatch = useDispatch();
-  const [elementsList, setElementsList] = useState([]);
+  const [initialListData, setInitialListData] = useState([]);
   const [generalInfo, setGeneralInfo] = useState(defaultLesson);
-  const { loading } = useSelector((state: IRootReducer) => state.lessonCreatorReducer);
+  const loading = useSelector((state: IRootReducer) => state.lessonCreatorReducer.loading,
+    shallowEqual);
   const navigate = useNavigate();
-
-  if (loading) {
-    return <Loader />;
-  }
 
   const getTemporaryId = () => String(Date.now() * Math.random());
 
   const addElement = (type: string) => {
-    const updatedElementsList = structuredClone(elementsList);
+    const updatedinitialListData = structuredClone(initialListData);
     const element = defaultElement[type as keyof typeof defaultElement];
-    element.index = elementsList.length + 1;
     element.elementId = getTemporaryId();
-    updatedElementsList.push(element);
-
-    setElementsList(updatedElementsList);
+    updatedinitialListData.push(element);
+    setInitialListData(updatedinitialListData);
   };
 
-  const availableElementsList = () => {
-    return addingBtn.map((item: any) => (
+  const availableElementsList = () => addingBtn.map((item: any) => (
       <div
         className="side-nav__element d-flex align-items-center justify-content-center"
         key={item.id}
@@ -44,49 +39,40 @@ export const LessonCreator: React.FC = () => {
       >
         <h3 className="side-nav__element-title">{item.title}</h3>
       </div>
-    ));
-  };
-
-  const changeOrder = (filteredList: any) =>
-    filteredList.forEach((item: any, index: number) => {
-      item.index = index + 1;
-    });
+  ));
 
   const deleteItem = (id: string) => {
-    const filteredList = elementsList.filter((item) => item.elementId !== id);
-
-    changeOrder(filteredList);
-    setElementsList(filteredList);
+    const filteredList = initialListData.filter((item) => item.elementId !== id);
+    setInitialListData(filteredList);
   };
 
   const handleCancel = () => navigate('/lessons');
 
-  const getDataByType = (type: string) => {
-    const list = elementsList.filter((item) => item.type === type);
-    list.forEach((item) => {
-      delete item.elementId;
-      return item;
-    });
-    return list;
-  };
-
-  const transformLessonData = () => ({
-    ...generalInfo,
-    text: getDataByType('text'),
-    picture: getDataByType('picture'),
-    video: getDataByType('video')
-  });
-
   const handleSave = () => {
-    dispatch(saveLessonRequest(transformLessonData()));
+    dispatch(saveLessonRequest({ generalInfo, initialListData }));
   };
 
-  const handleChange = (e: any, field: string) => {
+  const handleChangeGeneralInfo = (e: any, field: string) => {
     setGeneralInfo({
       ...generalInfo,
       [field]: e.target.value
     });
   };
+
+  const widgetList = React.useMemo(
+    () => initialListData.map((element: any) => (
+    <Widget
+      deleteItem={deleteItem}
+      element={element}
+      key={getTemporaryId()}
+      editMode={true} // temporary value, next step - editMode depens on user's actions - read/create/edit lesson.
+    />
+    )), [initialListData]
+  )
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="lessons">
@@ -95,37 +81,29 @@ export const LessonCreator: React.FC = () => {
       </section>
       <section className="lessons__content">
         <SideNav items={availableElementsList()} />
-        <Card className="lessons__list-container">
-          <Card.Body>
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                <Form>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Lesson`s Title</Form.Label>
-                    <Form.Control
-                      value={generalInfo.title}
-                      onChange={(e) => handleChange(e, 'title')}
-                      type="text"
-                      className="form-control"
-                      id="lessonTitle"
-                      placeholder="Enter title of the lesson"
-                    />
-                  </Form.Group>
-                </Form>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {elementsList.map((element: any) => (
-                  <Widget
-                    deleteItem={deleteItem}
-                    element={element}
-                    key={getTemporaryId()}
-                    elementId={element.elementId}
-                  />
-                ))}
-              </ListGroup.Item>
-            </ListGroup>
-          </Card.Body>
-        </Card>
+          <Card className="lessons__list-container">
+            <Card.Body>
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <Form>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Lesson`s Title</Form.Label>
+                      <Form.Control
+                        value={generalInfo.title}
+                        onChange={(e) => handleChangeGeneralInfo(e, 'title')}
+                        type="text"
+                        className="form-control"
+                        id="lessonTitle"
+                        placeholder="Enter title of the lesson" />
+                    </Form.Group>
+                  </Form>
+                </ListGroup.Item>
+                  <ListGroup.Item>
+                  { widgetList }
+                </ListGroup.Item>
+              </ListGroup>
+            </Card.Body>
+          </Card>
       </section>
     </div>
   );
