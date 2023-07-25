@@ -1,5 +1,5 @@
 import { type Action } from './actions';
-import { SAVE_LESSON_REQUEST, SAVE_LESSON_SUCCESS, SAVE_LESSON_ERROR } from './constants';
+import { SAVE_LESSON_REQUEST, SAVE_LESSON_SUCCESS, SAVE_LESSON_ERROR, SET_WIDGET_LIST } from './constants';
 
 export const initialState = {
   error: null as any,
@@ -30,7 +30,7 @@ export const lessonCreatorReducer = (
         error: null,
         loading: false
       };
-    case 'SET_WIDGET_LIST':
+    case SET_WIDGET_LIST:
       return {
         ...state,
         widgetsList: action.widgetsList

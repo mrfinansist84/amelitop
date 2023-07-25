@@ -15,34 +15,23 @@ import './LessonCreator.scss';
 // this component will be for all states - read, create, edit lesson
 export const LessonCreator: React.FC = () => {
   const dispatch = useDispatch();
-  const [elementsList, setElementsList] = useState([]);
+  const [initialListData, setInitialListData] = useState([]);
   const [generalInfo, setGeneralInfo] = useState(defaultLesson);
   const loading = useSelector((state: IRootReducer) => state.lessonCreatorReducer.loading,
     shallowEqual);
-  // const widgetsList = useSelector((state: IRootReducer) => state.lessonCreatorReducer.widgetsList, 
-  //   shallowEqual);
   const navigate = useNavigate();
-
-  if (loading) {
-    return <Loader />;
-  }
 
   const getTemporaryId = () => String(Date.now() * Math.random());
 
   const addElement = (type: string) => {
-    const updatedElementsList = structuredClone(elementsList);
-
+    const updatedinitialListData = structuredClone(initialListData);
     const element = defaultElement[type as keyof typeof defaultElement];
     element.elementId = getTemporaryId();
-    console.log(element.elementId, getTemporaryId())
-    updatedElementsList.push(element);
-
-    setElementsList(updatedElementsList);
+    updatedinitialListData.push(element);
+    setInitialListData(updatedinitialListData);
   };
 
-  const availableElementsList = () => {
-    console.log(56456)
-    return addingBtn.map((item: any) => (
+  const availableElementsList = () => addingBtn.map((item: any) => (
       <div
         className="side-nav__element d-flex align-items-center justify-content-center"
         key={item.id}
@@ -50,47 +39,17 @@ export const LessonCreator: React.FC = () => {
       >
         <h3 className="side-nav__element-title">{item.title}</h3>
       </div>
-    ));
-  };
-
-  const setOrder = (currentWidgetData: any) =>
-    currentWidgetData.map((item: any, index: number) => {
-      item.index = index + 1;
-      return item;
-    });
+  ));
 
   const deleteItem = (id: string) => {
-    const filteredList = elementsList.filter((item) => item.elementId !== id);
-
-    setElementsList(filteredList);
+    const filteredList = initialListData.filter((item) => item.elementId !== id);
+    setInitialListData(filteredList);
   };
 
   const handleCancel = () => navigate('/lessons');
 
-  const getDataByType = (list: any[], type: string) => {
-    const filteredList = list.filter((item) => item.type === type);
-    filteredList.forEach((item) => {
-      delete item.elementId;
-      return item;
-    });
-    return filteredList;
-  };
-
-  const transformLessonData = () => {
-    // отфильтровать по каркасу(elementsList)
-    // установить порядковый номерa
-    let widgetsList
-    const list = setOrder(widgetsList);
-    return {
-      ...generalInfo,
-      text: getDataByType(list, 'text'),
-      picture: getDataByType(list, 'picture'),
-      video: getDataByType(list, 'video')
-    };
-  };
-
   const handleSave = () => {
-    dispatch(saveLessonRequest(transformLessonData()));
+    dispatch(saveLessonRequest({ generalInfo, initialListData }));
   };
 
   const handleChangeGeneralInfo = (e: any, field: string) => {
@@ -99,6 +58,21 @@ export const LessonCreator: React.FC = () => {
       [field]: e.target.value
     });
   };
+
+  const widgetList = React.useMemo(
+    () => initialListData.map((element: any) => (
+    <Widget
+      deleteItem={deleteItem}
+      element={element}
+      key={getTemporaryId()}
+      editMode={true} // temporary value, next step - editMode depens on user's actions - read/create/edit lesson.
+    />
+    )), [initialListData]
+  )
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="lessons">
@@ -125,15 +99,7 @@ export const LessonCreator: React.FC = () => {
                   </Form>
                 </ListGroup.Item>
                   <ListGroup.Item>
-                  { elementsList.map((element: any) => (
-                    <Widget
-                      deleteItem={deleteItem}
-                      element={element}
-                      key={getTemporaryId()}
-                      elementId={element.elementId}
-                      editMode={true} // temporary value, next step - editMode depens on user's actions - read/create/edit lesson.
-                    />
-                  ))}
+                  { widgetList }
                 </ListGroup.Item>
               </ListGroup>
             </Card.Body>

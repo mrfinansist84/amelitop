@@ -1,9 +1,9 @@
-import { SAVE_LESSON_REQUEST, SAVE_LESSON_SUCCESS, SAVE_LESSON_ERROR } from './constants';
-import { type ILesson } from '~/global/types';
+import { SAVE_LESSON_REQUEST, SAVE_LESSON_SUCCESS, SAVE_LESSON_ERROR, SET_WIDGET_LIST } from './constants';
+// import { type ILesson } from '~/global/types';
 
-export const saveLessonRequest = (lesson: ILesson) => ({
+export const saveLessonRequest = (data: any) => ({
   type: SAVE_LESSON_REQUEST,
-  payload: lesson
+  payload: data
 });
 
 export const saveLessonSuccess = (payload: any) => ({
@@ -17,7 +17,7 @@ export const saveLessonError = (error: any) => ({
 });
 
 export const setWidgetsList = (widgetsList: any[]) => ({
-  type: 'SET_WIDGET_LIST',
+  type: SET_WIDGET_LIST,
   widgetsList
 });
 

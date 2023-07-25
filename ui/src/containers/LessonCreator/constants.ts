@@ -1,6 +1,7 @@
 export const SAVE_LESSON_REQUEST = 'SAVE_LESSON_REQUEST' as const;
 export const SAVE_LESSON_SUCCESS = 'SAVE_LESSON_SUCCESS' as const;
 export const SAVE_LESSON_ERROR = 'SAVE_LESSON_ERROR' as const;
+export const SET_WIDGET_LIST = 'SET_WIDGET_LIST' as const;
 
 export const defaultElement = {
   text: {
