@@ -3,25 +3,27 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card } from 'react-bootstrap';
+import { getAllLessonsRequest } from './actions';
 import { LessonPreview } from './components';
 import { Heading, Loader, SideNav } from '~/components';
-import { type ILessonPreview } from '~/global/types';
+import { ILesson, type ILessonPreview } from '~/global/types';
 import { type IRootReducer } from '~/rootReducer';
-import { getAllLessonsRequest } from './actions';
 
 import './LessonsPage.scss';
 
 export const LessonsPage: React.FC = () => {
   const dispatch = useDispatch();
-  const { lessonsPreviews, loading } = useSelector((state: IRootReducer) => state.lessonsReducer);
+  const { lessonsList, loading } = useSelector((state: IRootReducer) => state.lessonsReducer);
 
   React.useEffect(() => {
     dispatch(getAllLessonsRequest());
   }, [dispatch]);
 
-  if (loading) {
-    return <Loader />;
-  }
+  const getLessonsPreviews = (lessons: ILesson[]): ILessonPreview[] => {
+    return lessons.map((lesson: ILesson, idx: number) => ({ id: lesson.id, title: lesson.title, index: idx }));
+  };
+
+  const lessonsPreviews = getLessonsPreviews(lessonsList);
 
   const getNavContent = () => {
     return lessonsPreviews.map((lesson: ILessonPreview) => (
@@ -34,6 +36,7 @@ export const LessonsPage: React.FC = () => {
 
   return (
     <div className="lessons">
+      {loading && <Loader />}
       <section className="lessons__title">
         <Heading text="Lessons" />
       </section>

@@ -11,6 +11,14 @@ class LessonsService {
       throw e.response.data;
     }
   }
+
+  public static async deleteLesson(id: number) {
+    try {
+      await httpClient.delete(`/lessons/${id}/`, { validateStatus: (status) => status === 204 });
+    } catch (e) {
+      throw e.response.data;
+    }
+  }
 }
 
 export default LessonsService;
