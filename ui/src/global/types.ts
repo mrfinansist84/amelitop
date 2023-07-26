@@ -1,3 +1,5 @@
+import { MouseEventHandler } from 'react';
+
 export interface User {
   id?: string;
   email: string;
@@ -50,4 +52,9 @@ interface IVideoBlock extends IBlock {
 export interface AuthParams {
   refresh: string;
   access: string;
+}
+
+export interface ActionsMenuItem {
+  title: string;
+  onClick: () => void;
 }
