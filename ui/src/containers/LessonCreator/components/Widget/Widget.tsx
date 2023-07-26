@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { useState } from 'react';
-
-import { Video } from '../';
+import { Video, Text } from '../';
 import './Widget.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { type IRootReducer } from '~/rootReducer';
@@ -19,14 +18,14 @@ const WidgetComponent = (props: IProps) => {
   const widgetsList: any[] = useSelector(
     (state: IRootReducer) => state.lessonCreatorReducer.widgetsList);
   const { element, editMode, deleteItem } = props;
-  const [state, setState] = useState(element);
 
-  React.useEffect(() => {
+  const initState = () => {
     const updatedList = structuredClone(widgetsList);
     const targetElementIndex = widgetsList.findIndex(item => item.elementId === element.elementId);
+    return updatedList[targetElementIndex] || element;
+  };
 
-    setState(updatedList[targetElementIndex] || element)
-  }, []);
+  const [state, setState] = useState(initState());
 
   const handleChange = (e: any, field: string) => {
     const updatedState = {
@@ -56,12 +55,16 @@ const WidgetComponent = (props: IProps) => {
     dispatch(setWidgetsList(updatedList));
   };
 
-  const getElement = () => {
+  const getElement = React.useMemo(() => {
     let result;
-
-    // if (element.type === 'text') {
-    //   result = (<Text {...props} />);
-    // };
+    console.log(333, state)
+    if (element.type === 'text') {
+      result = (<Text
+        editMode={editMode}
+        handleChange={handleChange}
+        state={state}
+        />);
+    };
 
     if (element.type === 'video') {
       result = (<Video
@@ -77,7 +80,7 @@ const WidgetComponent = (props: IProps) => {
     // }
 
     return result;
-  };
+  }, [state]);
 
   return (
     <Card className="widget-container">
@@ -90,7 +93,7 @@ const WidgetComponent = (props: IProps) => {
       <Card.Body>
         <div className="element">
           <section className="element__body">
-            { getElement() }
+            { getElement }
           </section>
         </div>
       </Card.Body>
