@@ -18,14 +18,14 @@ const WidgetComponent = (props: IProps) => {
   const widgetsList: any[] = useSelector(
     (state: IRootReducer) => state.lessonCreatorReducer.widgetsList);
   const { element, editMode, deleteItem } = props;
-  const [state, setState] = useState(element);
 
-  React.useEffect(() => {
+  const initState = () => {
     const updatedList = structuredClone(widgetsList);
     const targetElementIndex = widgetsList.findIndex(item => item.elementId === element.elementId);
+    return updatedList[targetElementIndex] || element;
+  };
 
-    setState(updatedList[targetElementIndex] || element)
-  }, []);
+  const [state, setState] = useState(initState());
 
   const handleChange = (e: any, field: string) => {
     const updatedState = {
@@ -55,15 +55,14 @@ const WidgetComponent = (props: IProps) => {
     dispatch(setWidgetsList(updatedList));
   };
 
-  const getElement = () => {
+  const getElement = React.useMemo(() => {
     let result;
-
+    console.log(333, state)
     if (element.type === 'text') {
       result = (<Text
         editMode={editMode}
-        state={state}
         handleChange={handleChange}
-        handleElementChange={handleElementChange}
+        state={state}
         />);
     };
 
@@ -81,7 +80,7 @@ const WidgetComponent = (props: IProps) => {
     // }
 
     return result;
-  };
+  }, [state]);
 
   return (
     <Card className="widget-container">
@@ -94,7 +93,7 @@ const WidgetComponent = (props: IProps) => {
       <Card.Body>
         <div className="element">
           <section className="element__body">
-            { getElement() }
+            { getElement }
           </section>
         </div>
       </Card.Body>
